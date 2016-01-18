@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_recognize.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emihoubi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/01/14 13:42:24 by emihoubi          #+#    #+#             */
+/*   Updated: 2016/01/14 15:40:10 by emihoubi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <stdio.h>
+#include "libft/libft.h"
+
+int		ft_recognize(char *str)
+{
+	char **tab;
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	tab = ft_strsplit(str, '\n');
+	while (tab[y][x] == '.')
+	{
+		x++;
+		if (tab[y][x] == '\0')
+		{
+			y++;
+			x = 0;
+		}
+	}
+	if (tab[y][x] == '#')
+	{
+		if (tab[y + 1][x] == '#')
+		{
+			if (tab[y + 2][x] == '#')
+			{
+				if (tab[y + 3][x] == '#')
+					return (1);
+				if (tab[y + 2][x + 1] == '#')
+					return (1);
+				if (tab[y + 2][x - 1] == '#')
+					return (1);
+			}
+			
+}
+
+
+int	main()
+{
+	int i;
+	char **tab;
+
+	i = 0;
+	tab = ft_strsplit("....\n..##\n..#.\n..#.\n", '\n');
+	while (i < 4)
+	{
+		printf("%s\n", tab[i]);
+		i++;
+	}
+}
