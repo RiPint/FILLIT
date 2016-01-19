@@ -6,14 +6,15 @@
 /*   By: emihoubi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 13:42:24 by emihoubi          #+#    #+#             */
-/*   Updated: 2016/01/18 17:20:26 by emihoubi         ###   ########.fr       */
+/*   Updated: 2016/01/19 15:00:46 by jerollin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libft/libft.h"
-#include "../libft/ft_strsplit.c"
-#include "../libft/ft_strcmp.c"
+#include "../libft/LibftRetry/libft.h"
+#include "../libft/LibftRetry/ft_strsplit.c"
+#include "../libft/LibftRetry/ft_strcmp.c"
+
 void	recognize_def(int *i, int *y, int *x)
 {
 	*i = 0;
@@ -48,7 +49,7 @@ int		ft_recognize(char *str)
 	x = 0;
 	y = 0;
 	i = 0;
-	if(!(tmp = malloc(sizeof(int) * 4 + 1)))
+	if(!(tmp = malloc(sizeof(int) * 10)))
 		return (0);
 	tab = ft_strsplit(str, '\n');
 	while (y < 4)
@@ -58,18 +59,20 @@ int		ft_recognize(char *str)
 		y++;
 	}
 	y = 0;
-	while (y < 4)
+	while (y < 4 && tab[y])
 	{
-		while (tab[y][x] == '#')
+		x = 0;
+		while (tab[y][x] && tab[y][x] != '\n')
 		{
-			i++;
-			y++;
+			if (tab[y][x] == '#')
+				i++;
+			x++;
 		}
-		if (i == 3)
-			return (1);
-		x++;
+		y++;
 		i = 0;
 	}
+	if (i == 4)
+		return (0);
 	y = 0;
 	x = 0;
 	i = 0;
@@ -161,7 +164,7 @@ int		ft_recognize(char *str)
 }
 */
 
-int	main()
+int	main(void)
 {
 	printf("%d\n", ft_recognize(".#..\n.#..\n.#..\n.#..\n"));
 }
