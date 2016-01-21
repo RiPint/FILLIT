@@ -11,30 +11,15 @@
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libft/LibftRetry/libft.h"
-#include "../libft/LibftRetry/ft_strsplit.c"
-#include "../libft/LibftRetry/ft_strcmp.c"
+#include "libft/libft.h"
+#include "libft/ft_strsplit.c"
+#include "libft/ft_strcmp.c"
 
 void	recognize_def(int *i, int *y, int *x)
 {
 	*i = 0;
 	*y = 0;
 	*x = 0;
-}
-
-int		ft_add_tab(int *tab)
-{
-	int i;
-	int res;
-
-	i = 0;
-	res = 0;
-	while (tab[i])
-	{
-		res += tab[i];
-		i++;
-	}
-	return (res);
 }
 
 int		ft_recognize(char *str)
@@ -49,7 +34,7 @@ int		ft_recognize(char *str)
 	x = 0;
 	y = 0;
 	i = 0;
-	if(!(tmp = malloc(sizeof(int) * 10)))
+	if(!(tmp = malloc(sizeof(int) * 5)))
 		return (0);
 	tab = ft_strsplit(str, '\n');
 	while (y < 4)
@@ -59,20 +44,8 @@ int		ft_recognize(char *str)
 		y++;
 	}
 	y = 0;
-	while (y < 4 && tab[y])
-	{
-		x = 0;
-		while (tab[y][x] && tab[y][x] != '\n')
-		{
-			if (tab[y][x] == '#')
-				i++;
-			x++;
-		}
-		y++;
-		i = 0;
-	}
-	if (i == 4)
-		return (0);
+	if (ft_strcmp(tab[0], tab[1]) == 0 && ft_strcmp(tab[2], tab[3]) == 0)
+		return (1);
 	y = 0;
 	x = 0;
 	i = 0;
@@ -86,6 +59,8 @@ int		ft_recognize(char *str)
 				y++;
 				x = 0;
 			}
+			if (tab[y][x] == '#')
+				i++;
 		}
 		while (i < 4)
 		{
@@ -113,6 +88,7 @@ int		ft_recognize(char *str)
 					{
 						printf("%s\n", "3 if");
 						tmp[i] += 1;
+						printf("%d\n", tmp[i]);
 					}
 				}
 			if (tmp[i] == 3)
@@ -120,9 +96,7 @@ int		ft_recognize(char *str)
 				printf("%s\n", "5 if");
 				return (1);
 			}
-			printf("%s\n", "2eme boucle ope");
-			i++;
-			break ;
+			printf("%s\n", "damn");
 		}
 	}
 	i = 0;
@@ -166,5 +140,5 @@ int		ft_recognize(char *str)
 
 int	main(void)
 {
-	printf("%d\n", ft_recognize(".#..\n.#..\n.#..\n.#..\n"));
+	printf("%d\n", ft_recognize("....\n....\n...#\n###.\n"));
 }
