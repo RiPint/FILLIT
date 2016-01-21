@@ -6,14 +6,14 @@
 /*   By: emihoubi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 13:42:24 by emihoubi          #+#    #+#             */
-/*   Updated: 2016/01/19 15:00:46 by jerollin         ###   ########.fr       */
+/*   Updated: 2016/01/21 15:24:08 by emihoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
-#include "libft/libft.h"
-#include "libft/ft_strsplit.c"
-#include "libft/ft_strcmp.c"
+#include "../libft/libft.h"
+#include "../libft/ft_strsplit.c"
+#include "../libft/ft_strcmp.c"
 
 void	recognize_def(int *i, int *y, int *x)
 {
@@ -34,6 +34,18 @@ int		ft_recognize(char *str)
 	x = 0;
 	y = 0;
 	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '.' || str[i] == '\n')
+			i++;
+		if (str[i] == '#')
+		{
+			x++;
+			i++;
+		}
+	}
+	if (x != 4)
+		return (-1);
 	if(!(tmp = malloc(sizeof(int) * 5)))
 		return (0);
 	tab = ft_strsplit(str, '\n');
@@ -41,10 +53,14 @@ int		ft_recognize(char *str)
 	{
 		if (ft_strcmp(tab[y], "####") == 0)
 			return (1);
+		if (ft_strcmp(tab[y], "....") == 0)
+			i++;
+		if (i == 4)
+			return (-1);
 		y++;
 	}
-	y = 0;
-	if (ft_strcmp(tab[0], tab[1]) == 0 && ft_strcmp(tab[2], tab[3]) == 0)
+	if (ft_strcmp(tab[0], tab[1]) == 0 && ft_strcmp(tab[2], tab[3]) == 0
+		&& ft_strcmp(tab[0], tab[3]) == 0)
 		return (1);
 	y = 0;
 	x = 0;
@@ -59,10 +75,8 @@ int		ft_recognize(char *str)
 				y++;
 				x = 0;
 			}
-			if (tab[y][x] == '#')
-				i++;
 		}
-		while (i < 4)
+		while (i < 4 && x < 4 && y < 4)
 		{
 			if (tab[y][x] == '#' && x > 0 && y > 0)
 			{
@@ -88,33 +102,42 @@ int		ft_recognize(char *str)
 					{
 						printf("%s\n", "3 if");
 						tmp[i] += 1;
-						printf("%d\n", tmp[i]);
 					}
 				}
-			if (tmp[i] == 3)
+			/*if (tmp[i] == 3)
+
 			{
 				printf("%s\n", "5 if");
 				return (1);
-			}
-			printf("%s\n", "damn");
+				}*/
+			printf("%d\n", i);
+			/*if (x < 4)
+				x++;*/
+			if (tmp[i] != 0)
+				i++;
+			break ;
 		}
 	}
-	i = 0;
-	if (tmp[i] && tmp[i + 1] && tmp[i + 2] && tmp[i + 3] &&
-		tmp[i] == 2 && (tmp[i + 1] == 2 || tmp[i + 2] == 2 || tmp[i + 3] == 2))
+	if (tmp[0] == 3 || tmp[1] == 3 || tmp[2] == 3 || tmp[3] == 3)
 	{
-		printf("%s\n", "1 if");
+		printf("%s\n", "New if");
 		return (1);
 	}
-	if (tmp[i + 1] && tmp[i + 2] && tmp[i + 3] &&
-		tmp[i + 1] == 2 && (tmp[i + 2] == 2 || tmp[i + 3] == 2))
+	if (tmp[0] && tmp[1] && tmp[2] && tmp[3] &&
+		tmp[0] == 2 && (tmp[1] == 2 || tmp[2] == 2 || tmp[3] == 2))
 	{
-		printf("%s\n", "1 if");
+		printf("%s\n", "6 if");
 		return (1);
 	}
-	if (tmp[i + 2] && tmp[i + 3] && tmp[i + 2] == 2 && tmp[i + 3] == 2)
+	if (tmp[1] && tmp[2] && tmp[3] &&
+		tmp[1] == 2 && (tmp[2] == 2 || tmp[3] == 2))
 	{
-		printf("%s\n", "1 if");
+		printf("%s\n", "7 if");
+		return (1);
+	}
+	if (tmp[2] && tmp[3] && tmp[2] == 2 && tmp[3] == 2)
+	{
+		printf("%s\n", "8 if");
 		return (1);
 	}
 	return (-1);
@@ -140,5 +163,5 @@ int		ft_recognize(char *str)
 
 int	main(void)
 {
-	printf("%d\n", ft_recognize("....\n....\n...#\n###.\n"));
+	printf("%d\n", ft_recognize(".##.\n..#.\n..#.\n....\n"));
 }
