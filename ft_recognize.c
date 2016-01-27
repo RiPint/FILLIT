@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libft/libft.h"
-#include "../libft/ft_strsplit.c"
-#include "../libft/ft_strcmp.c"
+#include "../libftverif/libft.h"
+#include "../libftverif/ft_strsplit.c"
+#include "../libftverif/ft_strcmp.c"
 
 void	recognize_def(int *i, int *y, int *x)
 {
@@ -110,10 +110,10 @@ int		ft_recognize(char *str)
 				printf("%s\n", "5 if");
 				return (1);
 				}*/
-			printf("%d\n", i);
+			printf("%d\n", tmp[i]);
 			/*if (x < 4)
 				x++;*/
-			if (tmp[i] != 0)
+			if (tmp[i] != 1)
 				i++;
 			break ;
 		}
@@ -163,5 +163,5 @@ int		ft_recognize(char *str)
 
 int	main(void)
 {
-	printf("%d\n", ft_recognize(".##.\n..#.\n..#.\n....\n"));
+	printf("%d\n", ft_recognize(".#..\n.#..\n.#..\n.#..\n"));
 }
