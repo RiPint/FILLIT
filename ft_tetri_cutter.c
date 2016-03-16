@@ -13,20 +13,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	tetri_def(int *i, int *j, int *k)
+/*static void	tetri_def(int *i, int *j, int *k)
 {
 	*i = 0;
 	*j = 0;
 	*k = 0;
-}
+}*/
 
-static int	check(char *str)
+ static int	check(char *str)
 {
 	int i;
 	int j;
 	int k;
 
-	tetri_def(&i, &j, &k);
+	i = 0;
+	j = 0;
+	k = 0;
 	while (str[i])
 	{
 		i++;
@@ -45,7 +47,7 @@ static int	check(char *str)
 			return (-1);
 	}
 	return (1);
-}
+	}
 
 char	**ft_tetri_cutter(char *str)
 {
@@ -56,13 +58,17 @@ char	**ft_tetri_cutter(char *str)
 
 	if (check(str) != 1)
 		return (NULL);
-	tetri_def(&i, &j, &k);
+	printf("%s\n", "check ok");
+	i = 0;
+	j = 0;
+	k = 0;
        	while (str[i] != '\n' && str[i])
        	{
        		i++;
 		if (str[i] == '\n' && str[i + 1] == '\n')
 			j++;
        	}
+	printf("%s\n", "1st loop ok");
 	if (!(tab = (char**)malloc(sizeof(char*) * j)))
 		return (NULL);
 	i = 0;
@@ -73,16 +79,23 @@ char	**ft_tetri_cutter(char *str)
 		tab[k][20] = '\0';
 		k++;
 	}
-       	tetri_def(&i, &j, &k);
+	printf("%s\n", "malloc ok");
+       	i = -1;
+	j = 0;
+	k = 0;
 	while (str[i])
 	{
+		i++;
 		while (str[i] != '\n')
 		{
 			tab[j][k] = str[i];
 			i++;
 			k++;
 			if (str[i] == '\n' && str[i + 1] == '\n')
-				i++;
+			{
+				j++;
+				k = 0;
+			}
 		}
 	}
 	return (tab);
@@ -96,7 +109,9 @@ int	main()
   int k;
   char **tab;
 
-  tetri_def(&i, &j, &k);
+  i = 0;
+  j = 0;
+  k = 0;
   tab = ft_tetri_cutter("...#\n...#\n...#\n...#\n....\n....\n....\n####\n\n\n.###\n...#\n....\n....\n\n....\n..##\n.##.\n....\n\n");
   while (tab[i] != NULL)
     {
